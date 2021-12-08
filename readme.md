@@ -16,7 +16,7 @@ infrastructure code that implements an interface that makes sense to the applica
 from the database, file system, etc, lowers the cost of maintenance for the life of the application.
 
 
-###Architecture<br>
+### Architecture<br>
 
 #### Application Core (application + domain)
 
