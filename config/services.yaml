@@ -20,6 +20,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-
+    App\Core\Contract\ICommandBus : '@App\Infrastructure\CommandBus'
+    App\Core\Contract\IEventBus : '@App\Infrastructure\EventBus'
+    App\Core\Contract\IQueryBus : '@App\Infrastructure\QueryBus'
+    App\Core\Application\Company\Command\:
+        resource: '../src/Core/Application/Company/Command'
+        tags: [ { name: messenger.message_handler, bus: command.bus } ]
+    App\Core\Application\Company\Event\:
+        resource: '../src/Core/Application/Company/Event'
+        tags: [ { name: messenger.message_handler, bus: event.bus } ]
+    App\Core\Application\Company\Query\:
+        resource: '../src/Core/Application/Company/Query'
+        tags: [ { name: messenger.message_handler, bus: query.bus } ]
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

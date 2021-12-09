@@ -27,7 +27,7 @@ communication with presentation, tests and infrastructure.<br>
 <ul>
 <li>
 Events / Event Subscriber:
-defines the events, which represent the state changes in business domain. for example:
+defines the events, which represent the state changes in business domain.
 </li>
 <li>Services:
 The ser services enable the interaction with internal domains by using the predefined interfaces in the domain layer.

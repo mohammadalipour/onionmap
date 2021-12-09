@@ -7,14 +7,16 @@
         "php": ">=8.0.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^2.5",
+        "doctrine/orm": "^2.10",
         "symfony/console": "6.0.*",
+        "symfony/dependency-injection": "6.0.*",
         "symfony/dotenv": "6.0.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.0.*",
+        "symfony/messenger": "6.0.*",
         "symfony/runtime": "6.0.*",
         "symfony/yaml": "6.0.*"
-    },
-    "require-dev": {
     },
     "config": {
         "optimize-autoloader": true,
