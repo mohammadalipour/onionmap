@@ -2,13 +2,15 @@
 
 namespace App\Core\Domain;
 
+use App\Core\Domain\Validation\IsNumeric\IsNumeric;
+
 abstract class Id
 {
-    private string $id;
+    private $id;
 
-    final private function __construct(string $id)
+    final private function __construct($id)
     {
-        $this->isValidUuid($id);
+        $this->isNumeric($id);
         $this->id = $id;
     }
 
@@ -17,24 +19,16 @@ abstract class Id
         return $this->id;
     }
 
-    public static function generate(): static
-    {
-        return new static(uniqid());
-    }
-
     /**
-     * @param string $value
-     * @return bool
      * @throws \Exception
      */
-    private function isValidUuid(string $value): bool
+    public static function generate(): static
     {
-        $value = \str_replace(['urn:', 'uuid:', '{', '}'], '', $value);
+        return new static(id: random_int(1000,100000));
+    }
 
-        if (!\preg_match('/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/', $value)) {
-            throw new \Exception('');
-        }
-
-        return true;
+    private function isNumeric(int $id)
+    {
+        IsNumeric::execute($id);
     }
 }

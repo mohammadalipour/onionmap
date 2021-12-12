@@ -2,9 +2,9 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Core\Domain\Company\Model\Entity\Company;
-use App\Core\Domain\Company\Model\ValueObject\CompanyId;
-use App\Core\Domain\Company\Repository\ICompanyRepository;
+use App\Core\Domain\Model\Entity\Company;
+use App\Core\Domain\Model\ValueObject\Company\CompanyId;
+use App\Core\Domain\Repository\ICompanyRepository;
 use App\Infrastructure\Persistence\Exception\CompanyNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,22 +16,25 @@ final class CompanyRepository extends ServiceEntityRepository implements ICompan
         parent::__construct($registry, Company::class);
     }
 
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function add(Company $company): void
     {
         $this->getEntityManager()->persist($company);
     }
 
     /**
-     * @param CompanyId $id
+     * @param CompanyId $companyId
      * @return Company
      * @throws CompanyNotFoundException
      */
-    public function get(CompanyId $id): Company
+    public function get(CompanyId $companyId): Company
     {
-        $company = $this->find($id);
+        $company = $this->find($companyId);
 
         if (!$company instanceof Company) {
-            throw CompanyNotFoundException::byId($id);
+            throw CompanyNotFoundException::byId($companyId);
         }
 
         return $company;

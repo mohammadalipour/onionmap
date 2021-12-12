@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Persistence\Exception;
 
 
-use App\Core\Domain\Company\Model\ValueObject\CompanyId;
+use App\Core\Domain\Model\ValueObject\Company\CompanyId;
 
 final class CompanyNotFoundException extends EntityNotFoundException
 {

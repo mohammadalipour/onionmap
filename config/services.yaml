@@ -13,24 +13,40 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/'
+    App\Infrastructure\Framework\:
+        resource: '../src/Infrastructure/Framework/*'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
-    App\Core\Contract\ICommandBus : '@App\Infrastructure\CommandBus'
-    App\Core\Contract\IEventBus : '@App\Infrastructure\EventBus'
-    App\Core\Contract\IQueryBus : '@App\Infrastructure\QueryBus'
-    App\Core\Application\Company\Command\:
-        resource: '../src/Core/Application/Company/Command'
+            - '../src/Infrastructure/Framework/{DependencyInjection,Kernel.php}'
+    App\Core\Application\Contract\ICommandBus : '@App\Infrastructure\Framework\MessageBus\CommandBus'
+    App\Core\Application\Contract\IEventBus : '@App\Infrastructure\Framework\MessageBus\EventBus'
+    App\Core\Application\Contract\IQueryBus : '@App\Infrastructure\Framework\MessageBus\QueryBus'
+    App\Core\Domain\Repository\ICompanyRepository : '@App\Infrastructure\Persistence\Doctrine\Repository\CompanyRepository'
+    App\Core\Application\Event\Company\IDoSomething: '@App\Infrastructure\Notification\DoSomething'
+
+    App\Presentation\:
+        resource: '../src/Presentation/*'
+    App\Core\Application\UseCase\:
+        resource: '../src/Core/Application/UseCase'
+    App\Core\Domain\Model\Entity\:
+        resource: '../src/Core/Domain/Model/Entity'
+    App\Core\Domain\Model\ValueObject\:
+        resource: '../src/Core/Domain/Model/ValueObject'
+    App\Core\Application\Command\:
+        resource: '../src/Core/Application/Command'
         tags: [ { name: messenger.message_handler, bus: command.bus } ]
-    App\Core\Application\Company\Event\:
-        resource: '../src/Core/Application/Company/Event'
+    App\Core\Application\Event\:
+        resource: '../src/Core/Application/Event'
         tags: [ { name: messenger.message_handler, bus: event.bus } ]
-    App\Core\Application\Company\Query\:
-        resource: '../src/Core/Application/Company/Query'
+    App\Core\Application\Query\:
+        resource: '../src/Core/Application/Query'
         tags: [ { name: messenger.message_handler, bus: query.bus } ]
+    App\Presentation\Api\Rest\Controller\:
+        resource: '../src/Presentation/Api/Rest/Controller'
+        tags: [ { name: controller.service_arguments } ]
+    App\Infrastructure\Persistence\Doctrine\Repository\:
+        resource: '../src/Infrastructure/Persistence/Doctrine/Repository'
+        tags: [ { name: app.entity_repository } ]
+    App\Infrastructure\Notification\DoSomething:
+        autowire: false
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
