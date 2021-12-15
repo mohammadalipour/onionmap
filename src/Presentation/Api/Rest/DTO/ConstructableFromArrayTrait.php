@@ -31,7 +31,7 @@ trait ConstructableFromArrayTrait
 
             $parameters[] = $parameter;
         }
-        # Create new class with the parameters from the array
+        # CompanyCreate new class with the parameters from the array
         return new static(...$parameters);
     }
 }

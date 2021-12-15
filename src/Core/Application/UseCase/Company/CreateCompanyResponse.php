@@ -2,7 +2,7 @@
 
 namespace App\Core\Application\UseCase\Company;
 
-final class CreateResponse
+final class CreateCompanyResponse
 {
     public int $id;
     public string $title;

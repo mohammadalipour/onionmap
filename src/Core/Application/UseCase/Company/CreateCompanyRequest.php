@@ -2,7 +2,7 @@
 
 namespace App\Core\Application\UseCase\Company;
 
-class CreateRequest
+class CreateCompanyRequest
 {
     public string $title;
     public int $debtorLimit;

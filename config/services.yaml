@@ -17,11 +17,16 @@ services:
         resource: '../src/Infrastructure/Framework/*'
         exclude:
             - '../src/Infrastructure/Framework/{DependencyInjection,Kernel.php}'
+
     App\Core\Application\Contract\ICommandBus : '@App\Infrastructure\Framework\MessageBus\CommandBus'
     App\Core\Application\Contract\IEventBus : '@App\Infrastructure\Framework\MessageBus\EventBus'
     App\Core\Application\Contract\IQueryBus : '@App\Infrastructure\Framework\MessageBus\QueryBus'
+
     App\Core\Domain\Repository\ICompanyRepository : '@App\Infrastructure\Persistence\Doctrine\Repository\CompanyRepository'
+    App\Core\Domain\Repository\IInvoiceRepository : '@App\Infrastructure\Persistence\Doctrine\Repository\InvoiceRepository'
+
     App\Core\Application\Event\Company\IDoSomething: '@App\Infrastructure\Notification\DoSomething'
+    App\Core\Application\Event\Invoice\IDoSomething: '@App\Infrastructure\Notification\DoSomething'
 
     App\Presentation\:
         resource: '../src/Presentation/*'
@@ -47,6 +52,4 @@ services:
         resource: '../src/Infrastructure/Persistence/Doctrine/Repository'
         tags: [ { name: app.entity_repository } ]
     App\Infrastructure\Notification\DoSomething:
-        autowire: false
-    # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

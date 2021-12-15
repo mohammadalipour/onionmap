@@ -6,7 +6,7 @@ use App\Core\Domain\Model\ValueObject\Company\CompanyId;
 use App\Core\Domain\Model\ValueObject\Company\DebtorLimit;
 use App\Core\Domain\Model\ValueObject\Company\Title;
 
-final class Create
+final class CompanyCreate
 {
     private string $title;
     private int $debtorLimit;

@@ -3,9 +3,9 @@
 namespace App\Core\Application\UseCase\Company;
 
 use App\Core\Application\Contract\ICommandBus;
-use App\Core\Domain\Command\Company\Create;
+use App\Core\Domain\Command\Company\CompanyCreate;
 
-class CreateUseCase
+class CreateCompanyUseCase
 {
     private ICommandBus $commandBus;
 
@@ -14,11 +14,11 @@ class CreateUseCase
         $this->commandBus = $commandBus;
     }
 
-    public function execute(CreateRequest $request):CreateResponse
+    public function execute(CreateCompanyRequest $request):CreateCompanyResponse
     {
-        $response = new CreateResponse();
+        $response = new CreateCompanyResponse();
 
-        $this->commandBus->execute(new Create(
+        $this->commandBus->execute(new CompanyCreate(
             $request->title,
             $request->debtorLimit
         ));

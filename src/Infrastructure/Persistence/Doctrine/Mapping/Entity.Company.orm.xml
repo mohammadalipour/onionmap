@@ -9,8 +9,13 @@
       <generator strategy="AUTO"/>
     </id>
     <embedded name="title" class="App\Core\Domain\Model\ValueObject\Company\Title" use-column-prefix="false" />
-    <embedded name="debtorLimit" class="App\Core\Domain\Model\ValueObject\Company\DebtorLimit" use-column-prefix="false" />
+<!--    <embedded name="debtorLimit" class="App\Core\Domain\Model\ValueObject\Company\DebtorLimit" use-column-prefix="false" />-->
 
+    <field name="debtorLimit" column="debtor_limit" type="integer">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
     <field name="createdAt" column="created_at" type="datetime" />
 
   </entity>

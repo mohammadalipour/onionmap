@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.10",
+        "symfony/config": "6.0.*",
         "symfony/console": "6.0.*",
         "symfony/dependency-injection": "6.0.*",
         "symfony/dotenv": "6.0.*",
@@ -23,6 +24,7 @@
         "symfony/runtime": "6.0.*",
         "symfony/serializer": "6.0.*",
         "symfony/string": "6.0.*",
+        "symfony/translation": "6.0.*",
         "symfony/validator": "6.0.*",
         "symfony/yaml": "6.0.*"
     },

@@ -2,9 +2,9 @@
 
 namespace App\Presentation\Api\Rest\Controller\Company;
 
-use App\Core\Application\UseCase\Company\CreateUseCase;
+use App\Core\Application\UseCase\Company\CreateCompanyUseCase;
 use App\Infrastructure\Framework\Form\FormRegistry;
-use App\Infrastructure\Framework\Form\Type\Company\CreateType;
+use App\Infrastructure\Framework\Form\Type\Company\CreateCompanyType;
 use App\Presentation\Api\Rest\Presenter\Company\CreateCompanyPresenter;
 use App\Presentation\Api\Rest\View\Company\CreateCompanyView;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -16,13 +16,13 @@ final class CreateCompanyController extends AbstractFOSRestController
 {
     private FormRegistry $formRegistry;
     private CreateCompanyPresenter $companyPresenter;
-    private CreateUseCase $createUseCase;
+    private CreateCompanyUseCase $createUseCase;
     private CreateCompanyView $companyView;
 
     public function __construct(
         FormRegistry           $formRegistry,
         CreateCompanyPresenter $companyPresenter,
-        CreateUseCase          $createUseCase,
+        CreateCompanyUseCase   $createUseCase,
         CreateCompanyView      $companyView
     )
     {
@@ -34,21 +34,27 @@ final class CreateCompanyController extends AbstractFOSRestController
 
     public function __invoke(Request $request)
     {
-        $form = $this->formRegistry->createForm(CreateType::class);
-        $form->handleRequest($request);
-        $form->submit(json_decode($request->getContent(), true));
+        try {
+            $form = $this->formRegistry->createForm(CreateCompanyType::class);
+            $form->handleRequest($request);
+            $form->submit(json_decode($request->getContent(), true));
 
-        if (!$form->isValid()) {
-            return new JsonResponse($form->getErrors(), Response::HTTP_BAD_REQUEST);
+            if (!$form->isValid()) {
+
+                dd($form->getErrors(true));
+                return new JsonResponse($form->getErrors(true,false), Response::HTTP_BAD_REQUEST);
+            }
+
+            $companyRequest = $form->getData();
+            $companyResponse = $this->createUseCase->execute($companyRequest);
+
+            $presenter = $this->companyPresenter->present($companyResponse);
+
+            $response = $this->companyView->generate($presenter);
+
+            return new JsonResponse($response->getSingleResult(),200);
+        }catch (\Exception $exception){
+
         }
-
-        $companyRequest = $form->getData();
-        $companyResponse = $this->createUseCase->execute($companyRequest);
-
-        $presenter = $this->companyPresenter->present($companyResponse);
-
-        $response = $this->companyView->generate($presenter);
-
-        return new JsonResponse($response->getSingleResult(),200);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Presentation\Api\Rest\View\Company;
 
 use App\Infrastructure\Framework\Form\FormRegistry;
-use App\Infrastructure\Framework\Form\Type\Company\CreateType;
+use App\Infrastructure\Framework\Form\Type\Company\CreateCompanyType;
 use App\Presentation\Api\Rest\DTO\ResultCollection;
 use App\Presentation\Api\Rest\Model\Company\CreateCompanyModel;
 

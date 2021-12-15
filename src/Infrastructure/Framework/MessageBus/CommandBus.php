@@ -14,12 +14,15 @@ final class CommandBus implements ICommandBus
         $this->commandBus = $commandBus;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function execute(object $command): void
     {
         try {
             $this->commandBus->dispatch($command);
         }catch (\Exception $exception){
-            return ;
+            throw new \Exception($exception->getPrevious()->getMessage());
         }
     }
 }

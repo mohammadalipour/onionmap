@@ -3,11 +3,11 @@
 namespace App\Core\Application\Command\Company;
 
 use App\Core\Application\Contract\IEventBus;
-use App\Core\Domain\Command\Company\Create;
+use App\Core\Domain\Command\Company\CompanyCreate;
 use App\Core\Domain\Model\Entity\Company;
 use App\Core\Domain\Repository\ICompanyRepository;
 
-final class CreateHandler
+final class CreateCompanyHandler
 {
     private IEventBus $busEvent;
     private ICompanyRepository $companyRepository;
@@ -21,7 +21,7 @@ final class CreateHandler
     /**
      * @throws \Exception
      */
-    public function __invoke(Create $create): void
+    public function __invoke(CompanyCreate $create): void
     {
         $company = Company::create($create);
 

@@ -4,7 +4,7 @@ namespace App\Core\Domain\Event\Company;
 
 use App\Core\Domain\Model\ValueObject\Company\CompanyId;
 
-final class Created
+final class CompanyCreated
 {
     private CompanyId $companyId;
 
