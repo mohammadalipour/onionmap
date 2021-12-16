@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Framework\MessageBus;
 
 use App\Core\Application\Contract\ICommandBus;
+use Exception;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CommandBus implements ICommandBus
@@ -15,14 +16,10 @@ final class CommandBus implements ICommandBus
     }
 
     /**
-     * @throws \Exception
+     * @param object $command
      */
     public function execute(object $command): void
     {
-        try {
-            $this->commandBus->dispatch($command);
-        }catch (\Exception $exception){
-            throw new \Exception($exception->getPrevious()->getMessage());
-        }
+        $this->commandBus->dispatch($command);
     }
 }

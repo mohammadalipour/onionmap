@@ -26,7 +26,7 @@ services:
     App\Core\Domain\Repository\IInvoiceRepository : '@App\Infrastructure\Persistence\Doctrine\Repository\InvoiceRepository'
 
     App\Core\Application\Event\Company\IDoSomething: '@App\Infrastructure\Notification\DoSomething'
-    App\Core\Application\Event\Invoice\IDoSomething: '@App\Infrastructure\Notification\DoSomething'
+    App\Core\Application\Event\Invoice\IDoSomething: '@App\Infrastructure\Notification\DoInvoiceSomething'
 
     App\Presentation\:
         resource: '../src/Presentation/*'
@@ -52,4 +52,5 @@ services:
         resource: '../src/Infrastructure/Persistence/Doctrine/Repository'
         tags: [ { name: app.entity_repository } ]
     App\Infrastructure\Notification\DoSomething:
+    App\Infrastructure\Notification\DoInvoiceSomething:
     # please note that last definitions always *replace* previous ones

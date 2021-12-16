@@ -2,9 +2,11 @@
 
 namespace App\Core\Domain\Model\Entity;
 
-use App\Core\Domain\Command\Invoice\InvoiceCreate;
-use App\Core\Domain\Event\Invoice\InvoiceCreated;
-use App\Core\Domain\Model\ValueObject\Invoice\CompanyId;
+use App\Core\Domain\Command\Invoice\InvoiceCreateCommand;
+use App\Core\Domain\Event\Invoice\InvoiceCreatedEvent;
+use App\Core\Domain\Event\Invoice\InvoicePaidStatusEvent;
+use App\Core\Domain\Id;
+use App\Core\Domain\Model\Entity\Invoice\InvoiceCreate;
 use App\Core\Domain\Model\ValueObject\Invoice\Cost;
 use App\Core\Domain\Model\ValueObject\Invoice\CustomerId;
 use App\Core\Domain\Model\ValueObject\Invoice\InvoiceId;
@@ -22,15 +24,15 @@ class Invoice
 {
     use RaiseEvents;
 
-    private $id;
-    private SellerId $sellerId;
-    private CustomerId $customerId;
-    private Status $status;
-    private Quantity $quantity;
-    private Cost $cost;
-    private Title $title;
-    private Type $type;
-    private DateTimeInterface $createdAt;
+    protected $id;
+    protected SellerId $sellerId;
+    protected CustomerId $customerId;
+    protected Status $status;
+    protected Quantity $quantity;
+    protected Cost $cost;
+    protected Title $title;
+    protected Type $type;
+    protected DateTimeInterface $createdAt;
 
 
     /**
@@ -56,28 +58,31 @@ class Invoice
         $this->title = $title;
         $this->createdAt = Time::now();
 
-        $this->raise(new InvoiceCreated($this->id));
+        $this->raise(new InvoiceCreatedEvent($this->id));
     }
 
     /**
+     * @param InvoiceCreateCommand $create
+     * @return Invoice
      * @throws Exception
      */
-    public static function create(InvoiceCreate $create): self
+    public static function create(InvoiceCreateCommand $create): self
     {
-        try {
-            return new self(
-                new SellerId($create->sellerId()),
-                new CustomerId($create->customerId()),
-                new Status($create->status()),
-                new Quantity($create->quantity()),
-                new Cost($create->cost()),
-                new Title($create->title()),
-                new Type($create->type()),
-            );
-        }catch (Exception $exception){
-            dd($exception->getMessage());
-        }
+        return InvoiceCreate::execute($create);
+    }
 
+    public function setId(Id $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function setQuantity(Quantity $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
     }
 
     public function id(): InvoiceId
@@ -125,4 +130,17 @@ class Invoice
         return $this->createdAt;
     }
 
+    public function paid(): void
+    {
+        $this->setStatus(new Status(Status::PAID_STATUS));
+
+        $this->raise(new InvoicePaidStatusEvent($this->id));
+    }
+
+    public function setStatus(Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 }

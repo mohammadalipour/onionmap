@@ -27,4 +27,15 @@ class Type
     {
         return $this->type;
     }
+
+
+    public function toString(): string
+    {
+        return $this->type;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

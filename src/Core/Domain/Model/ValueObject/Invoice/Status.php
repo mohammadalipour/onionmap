@@ -28,4 +28,20 @@ class Status
     {
         return $this->status;
     }
+
+
+    public function toString(): string
+    {
+        return $this->status;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
+    public function is(string $status): bool
+    {
+        return $this->status === $status;
+    }
 }

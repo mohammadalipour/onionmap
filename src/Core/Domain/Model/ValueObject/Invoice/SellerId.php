@@ -9,10 +9,11 @@ class SellerId
 {
     private int $sellerId;
 
-    public function __construct($sellerId)
+    public function __construct(int $sellerId)
     {
         IsBlank::execute($sellerId);
         IsNumeric::execute($sellerId);
+
 
         $this->sellerId = $sellerId;
     }
@@ -20,5 +21,16 @@ class SellerId
     public function sellerId(): int
     {
         return $this->sellerId;
+    }
+
+
+    public function toString(): string
+    {
+        return $this->sellerId;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }

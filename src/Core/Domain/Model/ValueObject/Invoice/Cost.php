@@ -21,4 +21,15 @@ class Cost
     {
         return $this->cost;
     }
+
+
+    public function toString(): string
+    {
+        return $this->cost;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

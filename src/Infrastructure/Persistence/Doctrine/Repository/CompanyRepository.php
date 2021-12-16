@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
+use App\Core\Domain\Id;
 use App\Core\Domain\Model\Entity\Company;
 use App\Core\Domain\Model\ValueObject\Company\CompanyId;
 use App\Core\Domain\Repository\ICompanyRepository;
@@ -25,11 +26,11 @@ final class CompanyRepository extends ServiceEntityRepository implements ICompan
     }
 
     /**
-     * @param CompanyId $companyId
+     * @param Id $companyId
      * @return Company
      * @throws CompanyNotFoundException
      */
-    public function get(CompanyId $companyId): Company
+    public function get(Id $companyId): Company
     {
         $company = $this->find($companyId);
 

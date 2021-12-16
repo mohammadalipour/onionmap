@@ -14,11 +14,6 @@ abstract class Id
         $this->id = $id;
     }
 
-    public function __toString(): string
-    {
-        return $this->id;
-    }
-
     /**
      * @throws \Exception
      */
@@ -27,8 +22,23 @@ abstract class Id
         return new static(id: random_int(1000,100000));
     }
 
+    public static function fromString(string $id): self
+    {
+        return new static($id);
+    }
+
     private function isNumeric(int $id)
     {
         IsNumeric::execute($id);
+    }
+    
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
+    public function toString(): string
+    {
+        return $this->id;
     }
 }

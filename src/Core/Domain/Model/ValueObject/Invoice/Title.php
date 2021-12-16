@@ -20,4 +20,15 @@ class Title
     {
         return $this->title;
     }
+
+
+    public function toString(): string
+    {
+        return $this->title;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

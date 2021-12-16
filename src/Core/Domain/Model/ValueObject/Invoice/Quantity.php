@@ -21,4 +21,15 @@ class Quantity
     {
         return $this->quantity;
     }
+
+
+    public function toString(): string
+    {
+        return $this->quantity;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

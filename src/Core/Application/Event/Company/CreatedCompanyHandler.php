@@ -3,8 +3,7 @@
 namespace App\Core\Application\Event\Company;
 
 
-use App\Core\Domain\Event\Company\CompanyCreated;
-use Exception;
+use App\Core\Domain\Event\Company\CompanyCreatedEvent;
 
 final class CreatedCompanyHandler
 {
@@ -15,12 +14,11 @@ final class CreatedCompanyHandler
         $this->doSomething = $doSomething;
     }
 
-    public function __invoke(CompanyCreated $created)
+    /**
+     * @param CompanyCreatedEvent $created
+     */
+    public function __invoke(CompanyCreatedEvent $created)
     {
-        try {
-            $this->doSomething->execute($created->companyId());
-        } catch (Exception $exception) {
-            dd($exception);
-        }
+        $this->doSomething->execute($created->companyId());
     }
 }

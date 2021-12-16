@@ -21,4 +21,15 @@ class CustomerId
     {
         return $this->customerId;
     }
+
+
+    public function toString(): string
+    {
+        return $this->customerId;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

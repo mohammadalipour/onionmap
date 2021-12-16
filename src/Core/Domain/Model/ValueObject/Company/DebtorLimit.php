@@ -22,4 +22,15 @@ class DebtorLimit
     {
         return $this->debtorLimit;
     }
+
+
+    public function toString(): string
+    {
+        return $this->debtorLimit;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

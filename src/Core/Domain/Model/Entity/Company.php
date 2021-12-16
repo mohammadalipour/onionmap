@@ -2,8 +2,9 @@
 
 namespace App\Core\Domain\Model\Entity;
 
-use App\Core\Domain\Command\Company\CompanyCreate;
-use App\Core\Domain\Event\Company\CompanyCreated;
+use App\Core\Domain\Command\Company\CompanyCreateCommand;
+use App\Core\Domain\Event\Company\CompanyCreatedEvent;
+use App\Core\Domain\Model\Entity\Company\CompanyCreate;
 use App\Core\Domain\Model\ValueObject\Company\CompanyId;
 use App\Core\Domain\Model\ValueObject\Company\DebtorLimit;
 use App\Core\Domain\Model\ValueObject\Company\Title;
@@ -31,18 +32,15 @@ class Company
         $this->debtorLimit = $debtorLimit;
         $this->createdAt = Time::now();
 
-        $this->raise(new CompanyCreated($this->id));
+        $this->raise(new CompanyCreatedEvent($this->id));
     }
 
     /**
      * @throws Exception
      */
-    public static function create(CompanyCreate $create): self
+    public static function create(CompanyCreateCommand $create): self
     {
-        return new self(
-            new Title($create->title()),
-            new DebtorLimit($create->debtorLimit())
-        );
+        return CompanyCreate::create($create);
     }
 
     public function id(): CompanyId

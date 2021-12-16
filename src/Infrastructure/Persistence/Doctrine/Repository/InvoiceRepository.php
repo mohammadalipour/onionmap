@@ -2,17 +2,17 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
+use App\Core\Domain\Id;
 use App\Core\Domain\Model\Entity\Invoice;
 use App\Core\Domain\Model\ValueObject\Invoice\CustomerId;
-use App\Core\Domain\Model\ValueObject\Invoice\InvoiceId;
 use App\Core\Domain\Repository\IInvoiceRepository;
-use App\Infrastructure\Persistence\Exception\Invoice\InvoiceCreatedException;
 use App\Infrastructure\Persistence\Exception\Invoice\InvoiceDebtorLimitException;
 use App\Infrastructure\Persistence\Exception\Invoice\InvoiceNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 
 final class InvoiceRepository extends ServiceEntityRepository implements IInvoiceRepository
 {
@@ -24,13 +24,13 @@ final class InvoiceRepository extends ServiceEntityRepository implements IInvoic
     }
 
     /**
-     * @param InvoiceId $invoiceId
+     * @param Id $invoiceId
      * @return Invoice
      * @throws InvoiceNotFoundException
      */
-    public function get(InvoiceId $invoiceId): Invoice
+    public function get(Id $invoiceId): Invoice
     {
-        $invoice = $this->find($invoiceId);
+        $invoice = $this->find($invoiceId->toString());
 
         if (!$invoice instanceof Invoice) {
             throw InvoiceNotFoundException::byId($invoiceId);
@@ -40,9 +40,11 @@ final class InvoiceRepository extends ServiceEntityRepository implements IInvoic
     }
 
     /**
-     * @throws ORMException
-     * @throws \Doctrine\DBAL\Exception
+     * @param Invoice $invoice
+     * @throws InvoiceDebtorLimitException
      * @throws Exception
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function addWithLimitCondition(Invoice $invoice): void
     {
@@ -54,7 +56,7 @@ final class InvoiceRepository extends ServiceEntityRepository implements IInvoic
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function isGreaterDebtorLimit(CustomerId $company): bool
     {
@@ -74,15 +76,12 @@ final class InvoiceRepository extends ServiceEntityRepository implements IInvoic
     }
 
     /**
-     * @throws ORMException|InvoiceCreatedException
+     * @throws OptimisticLockException
+     * @throws ORMException
      */
     public function add(Invoice $invoice): void
     {
-        try {
-            $this->getEntityManager()->persist($invoice);
-            $this->getEntityManager()->flush();
-        } catch (Exception) {
-            throw InvoiceCreatedException::execute();
-        }
+        $this->getEntityManager()->persist($invoice);
+        $this->getEntityManager()->flush();
     }
 }

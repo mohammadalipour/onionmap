@@ -3,16 +3,16 @@
 namespace App\Infrastructure\Persistence\Exception\Invoice;
 
 
-use App\Core\Domain\Model\ValueObject\Invoice\InvoiceId;
+use App\Core\Domain\Id;
 use App\Infrastructure\Persistence\Exception\EntityNotFoundException;
 
 final class InvoiceNotFoundException extends EntityNotFoundException
 {
     /**
-     * @param InvoiceId $id
+     * @param Id $id
      * @return static
      */
-    public static function byId(InvoiceId $id): self
+    public static function byId(Id $id): self
     {
         return new self(sprintf('Invoice not found with id "%s"', $id));
     }

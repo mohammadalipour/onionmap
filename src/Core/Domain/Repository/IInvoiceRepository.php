@@ -2,9 +2,9 @@
 
 namespace App\Core\Domain\Repository;
 
+use App\Core\Domain\Id;
 use App\Core\Domain\Model\Entity\Invoice;
 use App\Core\Domain\Model\ValueObject\Invoice\CustomerId;
-use App\Core\Domain\Model\ValueObject\Invoice\InvoiceId;
 
 interface IInvoiceRepository
 {
@@ -12,7 +12,7 @@ interface IInvoiceRepository
 
     public function addWithLimitCondition(Invoice $invoice): void;
 
-    public function get(InvoiceId $companyInvoiceId): Invoice;
+    public function get(Id $companyInvoiceId): Invoice;
 
     public function isGreaterDebtorLimit(CustomerId $company): bool;
 }

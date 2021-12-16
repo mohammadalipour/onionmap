@@ -15,17 +15,17 @@ class EventBus implements IEventBus
         $this->messageBus = $messageBus;
     }
 
-    public function dispatch(object $event): void
-    {
-        $this->messageBus->dispatch($event, [
-            new DispatchAfterCurrentBusStamp()
-        ]);
-    }
-
     public function dispatchAll(array $events): void
     {
         foreach ($events as $event) {
             $this->dispatch($event);
         }
+    }
+
+    public function dispatch(object $event): void
+    {
+        $this->messageBus->dispatch($event, [
+            new DispatchAfterCurrentBusStamp()
+        ]);
     }
 }
