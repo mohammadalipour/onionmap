@@ -9,9 +9,9 @@ use App\Presentation\Api\Rest\Controller\RestApiController;
 use App\Presentation\Api\Rest\Presenter\Company\CompanyCreatePresenter;
 use App\Presentation\Api\Rest\View\Company\CompanyCreateView;
 use Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Exception\ValidatorException;
 
 final class CompanyCreateController extends RestApiController
 {
@@ -41,7 +41,7 @@ final class CompanyCreateController extends RestApiController
             $form->submit(json_decode($request->getContent(), true));
 
             if (!$form->isValid()) {
-                return new JsonResponse($form->getErrors(true, false), Response::HTTP_BAD_REQUEST);
+                throw new ValidatorException($form->getErrors(true));
             }
 
             $companyRequest = $form->getData();
@@ -50,9 +50,9 @@ final class CompanyCreateController extends RestApiController
             $companyPresenter = $this->companyPresenter->present($companyResponse);
             $companyResponse = $this->companyView->generate($companyPresenter);
 
-            return new JsonResponse($companyResponse->getSingleResult(), 200);
+            return $this->successResponse($companyResponse, Response::HTTP_CREATED);
         } catch (Exception $exception) {
-
+            return $this->failResponse($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }

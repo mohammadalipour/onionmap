@@ -3,8 +3,7 @@
 namespace App\Presentation\Api\Rest\View\Company;
 
 use App\Infrastructure\Framework\Form\FormRegistry;
-use App\Infrastructure\Framework\Form\Type\Company\CompanyCreateType;
-use App\Presentation\Api\Rest\DTO\ResultCollection;
+use App\Infrastructure\Transfer\ResultCollection;
 use App\Presentation\Api\Rest\Model\Company\CreateCompanyModel;
 
 final class CompanyCreateView
@@ -16,7 +15,11 @@ final class CompanyCreateView
         $this->formRegistry = $formRegistry;
     }
 
-    public function generate(CreateCompanyModel $companyModel):ResultCollection
+    /**
+     * @param CreateCompanyModel $companyModel
+     * @return ResultCollection
+     */
+    public function generate(CreateCompanyModel $companyModel): ResultCollection
     {
         return new ResultCollection([$companyModel]);
     }

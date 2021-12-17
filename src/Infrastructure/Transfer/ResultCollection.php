@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Api\Rest\DTO;
+namespace App\Infrastructure\Transfer;
 
 final class ResultCollection implements IResultCollection
 {
@@ -18,8 +18,10 @@ final class ResultCollection implements IResultCollection
 
     /**
      * Hydrate our result to a DTO object
+     * @param ConstructFromArrayInterface $constructFromArray
+     * @return mixed
      */
-    public function hydrateSingleResultAs(ConstructFromArrayInterface $constructFromArray)
+    public function hydrateSingleResultAs(ConstructFromArrayInterface $constructFromArray): mixed
     {
         $item = $this->getSingleResult();
 

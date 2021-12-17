@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Api\Rest\DTO;
+namespace App\Infrastructure\Transfer;
 
 trait ConstructableFromArrayTrait
 {

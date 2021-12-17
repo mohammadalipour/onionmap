@@ -3,7 +3,7 @@
 namespace App\Presentation\Api\Rest\View\Invoice;
 
 use App\Infrastructure\Framework\Form\FormRegistry;
-use App\Presentation\Api\Rest\DTO\ResultCollection;
+use App\Infrastructure\Transfer\ResultCollection;
 use App\Presentation\Api\Rest\Model\Invoice\UpdateInvoiceStatusModel;
 
 final class InvoicePaidStatusView
@@ -15,6 +15,10 @@ final class InvoicePaidStatusView
         $this->formRegistry = $formRegistry;
     }
 
+    /**
+     * @param UpdateInvoiceStatusModel $invoiceModel
+     * @return ResultCollection
+     */
     public function generate(UpdateInvoiceStatusModel $invoiceModel): ResultCollection
     {
         return new ResultCollection([$invoiceModel]);

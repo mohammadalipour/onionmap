@@ -9,9 +9,9 @@ use App\Presentation\Api\Rest\Controller\RestApiController;
 use App\Presentation\Api\Rest\Presenter\Invoice\InvoicePaidPaidStatusPresenter;
 use App\Presentation\Api\Rest\View\Invoice\InvoicePaidStatusView;
 use Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Exception\ValidatorException;
 
 final class InvoicePaidStatusController extends RestApiController
 {
@@ -41,7 +41,7 @@ final class InvoicePaidStatusController extends RestApiController
             $form->submit(json_decode($request->getContent(), true));
 
             if (!$form->isValid()) {
-                return new JsonResponse($form, Response::HTTP_BAD_REQUEST);
+                throw new ValidatorException($form->getErrors(true));
             }
 
             $invoiceRequest = $form->getData();
@@ -52,9 +52,9 @@ final class InvoicePaidStatusController extends RestApiController
 
             $response = $this->InvoiceView->generate($presenter);
 
-            return new JsonResponse($response->getSingleResult(), 200);
+            return $this->successResponse($response, Response::HTTP_ACCEPTED);
         } catch (Exception $exception) {
-            return new JsonResponse(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+            return $this->failResponse($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }
