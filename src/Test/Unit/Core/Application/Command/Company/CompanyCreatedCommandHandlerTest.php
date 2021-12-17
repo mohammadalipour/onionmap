@@ -11,36 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 class CompanyCreatedCommandHandlerTest extends TestCase
 {
-    /*
-     * $executionDay = (new \DateTimeImmutable())->setTime(0, 0);
-            $title = 'Some title';
-            $description = 'Some description';
-
-            $repository = $this->createMock(TaskRepositoryInterface::class);
-            $repository->expects(self::once())
-                ->method('add')
-                ->with(self::callback(
-                    fn(Task $task): bool => $task->getTitle() === $title
-                        && $task->getDescription() === $description
-                        && $task->getExecutionDay() == $executionDay
-                ));
-
-            $userFetcher = $this->createMock(UserFetcherInterface::class);
-            $userFetcher->method('fetchRequiredUser')->willReturn(new User('name', 'pass_hash', $this->getUniqueUsernameSpecification()));
-
-            $command = new CreateTaskCommand($title, $executionDay, $description);
-            $handler = new CreateTaskCommandHandler($repository, $userFetcher);
-
-            try {
-                $handler($command);
-            } catch (\Error $e) {
-                // php7.4 fix
-                if (strpos($e->getMessage(), 'id must not be accessed before initialization') === false) {
-                    throw $e;
-                }
-            }
-     */
-
     /**
      * @throws \Exception
      */
