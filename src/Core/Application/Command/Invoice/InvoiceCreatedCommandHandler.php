@@ -8,7 +8,7 @@ use App\Core\Domain\Model\Entity\Invoice;
 use App\Core\Domain\Repository\IInvoiceRepository;
 use Exception;
 
-final class InvoiceCreatedHandler
+final class InvoiceCreatedCommandHandler
 {
     private IEventBus $busEvent;
     private IInvoiceRepository $IInvoiceRepository;

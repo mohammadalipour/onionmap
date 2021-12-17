@@ -76,6 +76,7 @@
     },
     "require-dev": {
         "friendsofsymfony/rest-bundle": "^3.1",
+        "phpunit/phpunit": "^9",
         "symfony/maker-bundle": "^1.36"
     }
 }

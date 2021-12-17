@@ -12,3 +12,7 @@
 
 .idea
 dockerFiles/mysql/dbData/*
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

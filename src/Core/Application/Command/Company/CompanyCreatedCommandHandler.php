@@ -8,7 +8,7 @@ use App\Core\Domain\Model\Entity\Company;
 use App\Core\Domain\Repository\ICompanyRepository;
 use Exception;
 
-final class CompanyCreatedHandler
+final class CompanyCreatedCommandHandler
 {
     private IEventBus $busEvent;
     private ICompanyRepository $companyRepository;
@@ -27,7 +27,7 @@ final class CompanyCreatedHandler
     {
         $company = Company::create($create);
         $this->companyRepository->add($company);
-        $this->busEvent->dispatchAll($company->pop());
 
+        $this->busEvent->dispatchAll($company->pop());
     }
 }

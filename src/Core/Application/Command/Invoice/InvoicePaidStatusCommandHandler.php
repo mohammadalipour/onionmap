@@ -8,7 +8,7 @@ use App\Core\Domain\Model\ValueObject\Invoice\InvoiceId;
 use App\Core\Domain\Model\ValueObject\Invoice\Status;
 use App\Core\Domain\Repository\IInvoiceRepository;
 
-final class InvoicePaidStatusHandler
+final class InvoicePaidStatusCommandHandler
 {
     private IEventBus $busEvent;
     private IInvoiceRepository $IInvoiceRepository;
