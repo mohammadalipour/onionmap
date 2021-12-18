@@ -1,5 +1,5 @@
 say_hello:
-	@echo "Hi Guys"
+	@echo "starting Onionmap project"
 
 docker:
 	@docker-compose build
